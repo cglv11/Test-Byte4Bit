@@ -1,0 +1,106 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Driver {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String!
+  licenseNumber: String!
+  averageRating: Float!
+  availability: Boolean!
+  createdAt: String!
+  updatedAt: String!
+  trips: [Trip!]
+  state: Boolean!
+}
+
+type Trip {
+  id: Int!
+  driver: Driver!
+  user: User!
+  origin: String!
+  destination: String!
+  startDateTime: DateTime!
+  endDateTime: DateTime
+  distance: Float!
+  fare: Float!
+  status: TripStatus!
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum TripStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String!
+  registrationDate: String!
+  location: String
+  averageRating: Float
+  status: UserStatus!
+  createdAt: String!
+  updatedAt: String!
+  trips: [Trip!]
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User
+}
+
+type Mutation {
+  login(email: String!, password: String!): AuthResponse!
+  createUser(createUserData: CreateUserInput!): AuthResponse!
+  updateUser(updateUserData: UpdateUserInput!): User!
+  removeUser(id: Int!): Boolean!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  location: String
+  averageRating: Float = 0
+  status: UserStatus! = ACTIVE
+}
+
+input UpdateUserInput {
+  id: Int!
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phoneNumber: String
+  location: String
+  averageRating: Float
+  status: UserStatus
+}
