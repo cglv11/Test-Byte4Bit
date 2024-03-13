@@ -48,9 +48,9 @@ export class UserService {
   }
 
 
-  async update(id: number, updateData: Partial<User>, requestUserId: number): Promise<User> {
+  async update(id: number, updateData: Partial<User>, requestTokenId: number): Promise<User> {
 
-    if (id !== requestUserId) {
+    if (id !== requestTokenId) {
       throw new UnauthorizedException('You do not have permission to update this user.');
     }
 
@@ -74,9 +74,9 @@ export class UserService {
   }
 
 
-  async remove(id: number, requestUserId: number): Promise<void> {
+  async remove(id: number, requestTokenId: number): Promise<void> {
 
-    if (id !== requestUserId) {
+    if (id !== requestTokenId) {
       throw new UnauthorizedException('You do not have permission to delete this user.');
     }
     

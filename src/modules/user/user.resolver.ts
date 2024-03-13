@@ -1,13 +1,12 @@
 import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../auth/gql-auth.guard';
-import { AuthResponse } from '../auth/auth-response';
-import { AuthService } from '../auth/auth.service';
 import { TokenService } from '../shared/services/token.service';
+import { UserAuthResponse } from '../auth/auth-user/user-auth-response';
 
 @Resolver(of => User)
 export class UserResolver {
@@ -28,8 +27,8 @@ export class UserResolver {
     return this.userService.findOne(id);
   }
 
-  @Mutation(returns => AuthResponse)
-  async createUser(@Args('createUserData') createUserData: CreateUserInput): Promise<AuthResponse> {
+  @Mutation(returns => UserAuthResponse)
+  async createUser(@Args('createUserData') createUserData: CreateUserInput): Promise<UserAuthResponse> {
     const user = await this.userService.create(createUserData);
     const token = this.tokenService.generateToken(user);
     return { user, token };
@@ -38,15 +37,15 @@ export class UserResolver {
   @Mutation(returns => User)
   @UseGuards(GqlAuthGuard) 
   async updateUser(@Args('updateUserData') updateUserData: UpdateUserInput, @Context() context): Promise<User> {
-    const requestUserId = context.req.user.id;
-    return this.userService.update(updateUserData.id, updateUserData, requestUserId);
+    const requestTokenId = context.req.user.id;
+    return this.userService.update(updateUserData.id, updateUserData, requestTokenId);
   }
   
   @Mutation(returns => Boolean)
   @UseGuards(GqlAuthGuard) 
   async removeUser(@Args('id', { type: () => Int }) id: number, @Context() context): Promise<boolean> {
-    const requestUserId = context.req.user.id;
-    await this.userService.remove(id, requestUserId);
+    const requestTokenId = context.req.user.id;
+    await this.userService.remove(id, requestTokenId);
     return true;
   }
 }

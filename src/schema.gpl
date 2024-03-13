@@ -65,7 +65,7 @@ enum UserStatus {
   SUSPENDED
 }
 
-type AuthResponse {
+type UserAuthResponse {
   token: String!
   user: User!
 }
@@ -73,11 +73,13 @@ type AuthResponse {
 type Query {
   users: [User!]!
   user(id: Int!): User
+  drivers: [Driver!]!
+  driver(id: Int!): Driver
 }
 
 type Mutation {
-  login(email: String!, password: String!): AuthResponse!
-  createUser(createUserData: CreateUserInput!): AuthResponse!
+  loginUser(email: String!, password: String!): UserAuthResponse!
+  createUser(createUserData: CreateUserInput!): UserAuthResponse!
   updateUser(updateUserData: UpdateUserInput!): User!
   removeUser(id: Int!): Boolean!
 }

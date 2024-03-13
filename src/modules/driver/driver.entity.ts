@@ -17,13 +17,16 @@ export class Driver {
   @Field()
   lastName: string;
 
-  @Column({ unique: true })
+  @Column()
   @Field()
   email: string;
 
   @Column()
   @Field()
   phoneNumber: string;
+
+  @Column()
+  password: string;
 
   @Column({ unique: true })
   @Field()

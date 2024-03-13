@@ -1,8 +1,9 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { User } from "../user/user.entity";
+import { User } from "src/modules/user/user.entity";
+import { Driver } from "typeorm";
 
 @ObjectType()
-export class AuthResponse {
+export class UserAuthResponse {
   @Field()
   token: string;
 
