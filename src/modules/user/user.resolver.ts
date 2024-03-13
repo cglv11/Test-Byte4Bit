@@ -38,14 +38,14 @@ export class UserResolver {
   @Mutation(returns => User)
   @UseGuards(GqlAuthGuard) 
   async updateUser(@Args('updateUserData') updateUserData: UpdateUserInput, @Context() context): Promise<User> {
-    const requestUserId = context.req.user;
+    const requestUserId = context.req.user.id;
     return this.userService.update(updateUserData.id, updateUserData, requestUserId);
   }
   
   @Mutation(returns => Boolean)
   @UseGuards(GqlAuthGuard) 
   async removeUser(@Args('id', { type: () => Int }) id: number, @Context() context): Promise<boolean> {
-    const requestUserId = context.req.user;
+    const requestUserId = context.req.user.id;
     await this.userService.remove(id, requestUserId);
     return true;
   }
