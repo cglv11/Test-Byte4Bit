@@ -7,10 +7,11 @@ import { Driver } from './modules/driver/driver.entity';
 import { Trip } from './modules/trip/trip.entity';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { Request } from 'express';
 import { SharedModule } from './modules/shared/shared.module';
 import { DriverModule } from './modules/driver/driver.module';
 import { TripModule } from './modules/trip/trip.module';
+import { Admin } from './modules/admin/admin.entity';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -25,9 +26,10 @@ import { TripModule } from './modules/trip/trip.module';
       username: 'postgres',
       password: '123456',
       database: 'db_transport_app',
-      entities: [User, Driver, Trip],
+      entities: [User, Driver, Trip, Admin],
       synchronize: true,
     }),
+    AdminModule,
     AuthModule,
     UserModule,
     DriverModule,

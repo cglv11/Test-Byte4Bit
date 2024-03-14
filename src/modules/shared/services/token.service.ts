@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "../../user/user.entity";
 import { Driver } from '../../driver/driver.entity';
+import { Admin } from '../../admin/admin.entity';
 
 @Injectable()
 export class TokenService {
@@ -14,6 +15,11 @@ export class TokenService {
   
   generateTokenDriver(driver: Driver) {
     const payload = { email: driver.email, sub: driver.id };
+    return this.jwtService.sign(payload);
+  }
+
+  generateTokenAdmin(admin: Admin) {
+    const payload = { email: admin.email, sub: admin.id };
     return this.jwtService.sign(payload);
   }
 }

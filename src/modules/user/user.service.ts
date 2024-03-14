@@ -26,7 +26,7 @@ export class UserService {
     });
   
     if (!user) {
-      throw new NotFoundException(`Driver with ID ${id} not found`);
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
   
     const trips = {

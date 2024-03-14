@@ -11,7 +11,7 @@ export class DriverAuthService {
     private tokenService: TokenService
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateDriver(email: string, password: string): Promise<any> {
     const driver = await this.driverService.findByEmail(email);
 
     if (!driver || !driver.state) {
@@ -28,7 +28,7 @@ export class DriverAuthService {
   }
 
   async login(email: string, password: string): Promise<{ token: string; driver: Driver }> {
-    const driver = await this.validateUser(email, password);
+    const driver = await this.validateDriver(email, password);
     const token = this.tokenService.generateTokenDriver(driver);
 
     return {

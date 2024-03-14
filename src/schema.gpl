@@ -102,12 +102,34 @@ type DriverResponse {
   trips: TripCountResponse!
 }
 
+type Admin {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type AdminAuthResponse {
+  token: String!
+  admin: Admin!
+}
+
+type AdminsResponse {
+  admins: [Admin!]!
+  count: Float!
+}
+
 type TripResponse {
   trips: [Trip!]!
   count: Float!
 }
 
 type Query {
+  admins: AdminsResponse!
+  admin(id: Int!): Admin
   users: UsersResponse!
   user(id: Int!): UserResponse
   drivers: DriversResponse!
@@ -117,6 +139,10 @@ type Query {
 }
 
 type Mutation {
+  createAdmin(createAdminData: CreateAdminInput!): AdminAuthResponse!
+  updateAdmin(updateUserData: UpdateAdminInput!): Admin!
+  removeAdmin(id: Int!): Boolean!
+  loginAdmin(email: String!, password: String!): AdminAuthResponse!
   loginUser(email: String!, password: String!): UserAuthResponse!
   createUser(createUserData: CreateUserInput!): UserAuthResponse!
   updateUser(updateUserData: UpdateUserInput!): User!
@@ -129,6 +155,23 @@ type Mutation {
   updateTrip(updateTripData: UpdateTripInput!): Trip!
   removeTrip(id: Int!): Boolean!
   finalizeTrip(id: Int!, endDateTime: String!): Trip!
+}
+
+input CreateAdminInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+}
+
+input UpdateAdminInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phoneNumber: String
+  id: Int!
 }
 
 input CreateUserInput {

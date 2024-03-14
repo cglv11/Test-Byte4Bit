@@ -9,7 +9,7 @@ export class UserAuthResolver {
 
   @Mutation(() => UserAuthResponse)
     async loginUser(@Args('email') email: string, @Args('password') password: string,
-  ): Promise<UserAuthResponse> {
+  ) {
 
     const { token, user } = await this.userAuthService.login(email, password);
     return {

@@ -10,7 +10,7 @@ export class DriverAuthResolver {
 
   @Mutation(() => DriverAuthResponse)
     async loginDriver(@Args('email') email: string, @Args('password') password: string,
-  ): Promise<DriverAuthResponse> {
+  ) {
 
     const { token, driver } = await this.driverAuthService.login(email, password);
     return {
