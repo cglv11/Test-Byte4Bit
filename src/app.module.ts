@@ -10,6 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { Request } from 'express';
 import { SharedModule } from './modules/shared/shared.module';
 import { DriverModule } from './modules/driver/driver.module';
+import { TripModule } from './modules/trip/trip.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { DriverModule } from './modules/driver/driver.module';
     AuthModule,
     UserModule,
     DriverModule,
+    TripModule,
     SharedModule
   ],
   controllers: [],

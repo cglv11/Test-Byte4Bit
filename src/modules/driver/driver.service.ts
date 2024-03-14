@@ -70,7 +70,7 @@ export class DriverService {
     }
   
     await this.driverRepository.update(id, updateData);
-    return this.driverRepository.findOne({ where: { id, state: true } });
+    return this.driverRepository.findOne({ where: { id, state: true }, relations: ['trips'] });
   }
 
 

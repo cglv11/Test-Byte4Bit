@@ -37,7 +37,7 @@ export class Trip {
   @Field()
   destination: string;
 
-  @Column()
+  @CreateDateColumn()
   @Field()
   startDateTime: Date;
 
@@ -52,6 +52,10 @@ export class Trip {
   @Column({ type: 'decimal' })
   @Field(type => Float)
   fare: number;
+
+  @Column({ nullable: true, type: 'bigint' }) 
+  @Field(type => Int, { nullable: true })
+  duration?: number;
 
   @Column({
     type: "enum",

@@ -27,6 +27,7 @@ type Trip {
   endDateTime: DateTime
   distance: Float!
   fare: Float!
+  duration: Int
   status: TripStatus!
   createdAt: String!
   updatedAt: String!
@@ -80,6 +81,8 @@ type Query {
   user(id: Int!): User
   drivers: [Driver!]!
   driver(id: Int!): Driver
+  trips: [Trip!]!
+  trip(id: Int!): Trip
 }
 
 type Mutation {
@@ -91,6 +94,10 @@ type Mutation {
   createDriver(createDriverData: CreateDriverInput!): DriverAuthResponse!
   updateDriver(updateDriverData: UpdateDriverInput!): Driver!
   removeDriver(id: Int!): Boolean!
+  createTrip(createTripData: CreateTripInput!): Trip!
+  updateTrip(updateTripData: UpdateTripInput!): Trip!
+  deleteTrip(id: Int!): Boolean!
+  finalizeTrip(id: Int!, endDateTime: String!): Trip!
 }
 
 input CreateUserInput {
@@ -111,8 +118,8 @@ input UpdateUserInput {
   password: String
   phoneNumber: String
   location: String
-  averageRating: Float
-  status: UserStatus
+  averageRating: Float = 0
+  status: UserStatus = ACTIVE
   id: Int!
 }
 
@@ -134,7 +141,34 @@ input UpdateDriverInput {
   password: String
   phoneNumber: String
   licenseNumber: String
-  averageRating: Float
-  availability: Boolean
+  averageRating: Float = 0
+  availability: Boolean = false
+  id: Int!
+}
+
+input CreateTripInput {
+  driverId: Int!
+  userId: Int!
+  origin: String!
+  destination: String!
+  distance: Float!
+  fare: Float!
+
+  """Duration of the trip in minutes."""
+  duration: Int!
+  status: TripStatus! = PENDING
+}
+
+input UpdateTripInput {
+  driverId: Int
+  userId: Int
+  origin: String
+  destination: String
+  distance: Float
+  fare: Float
+
+  """Duration of the trip in minutes."""
+  duration: Int
+  status: TripStatus = PENDING
   id: Int!
 }

@@ -15,7 +15,7 @@ export class UserService {
   async findAll(): Promise<User[]> {
     return this.userRepository.find({
       where: { state: true },
-      relations: ['trips'],
+      relations: ['trips']
     });
   }
 
@@ -23,7 +23,7 @@ export class UserService {
   async findOne(id: number): Promise<User | undefined> {
     return this.userRepository.findOne({
       where: { id, state: true },
-      relations: ['trips'],
+      relations: ['trips']
     });
   }
 
@@ -70,7 +70,7 @@ export class UserService {
     }
   
     await this.userRepository.update(id, updateData);
-    return this.userRepository.findOne({ where: { id, state: true } });
+    return this.userRepository.findOne({ where: { id, state: true }, relations: ['trips'] },);
   }
 
 

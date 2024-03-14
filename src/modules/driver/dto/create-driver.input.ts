@@ -17,6 +17,7 @@ export class CreateDriverInput {
   @Field()
   password: string;
 
+  @IsNotEmpty()
   @Field()
   phoneNumber: string;
 
