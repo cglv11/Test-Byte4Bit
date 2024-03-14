@@ -8,6 +8,7 @@ import { TokenService } from '../shared/services/token.service';
 import { UserAuthResponse } from '../auth/auth-user/user-auth-response';
 import { UserAuthGuard } from '../auth/auth-user/user-auth.guard';
 import { UserResponse } from './dto/user.response';
+import { UsersResponse } from './dto/users.response';
 
 @Resolver(of => User)
 export class UserResolver {
@@ -16,35 +17,35 @@ export class UserResolver {
     private tokenService: TokenService 
     ) {}
 
-  @Query(returns => UserResponse)
+  @Query(() => UsersResponse)
   @UseGuards(UserAuthGuard) 
   async users() {
     return this.userService.findAll();
   }
 
-  @Query(returns => User, { nullable: true })
+  @Query(() => UserResponse, { nullable: true })
   @UseGuards(UserAuthGuard) 
-  async user(@Args('id', { type: () => Int }) id: number): Promise<User | undefined> {
+  async user(@Args('id', { type: () => Int }) id: number) {
     return this.userService.findOne(id);
   }
 
-  @Mutation(returns => UserAuthResponse)
-  async createUser(@Args('createUserData') createUserData: CreateUserInput): Promise<UserAuthResponse> {
+  @Mutation(() => UserAuthResponse)
+  async createUser(@Args('createUserData') createUserData: CreateUserInput) {
     const user = await this.userService.create(createUserData);
     const token = this.tokenService.generateToken(user);
     return { user, token };
   }
 
-  @Mutation(returns => User)
+  @Mutation(() => User)
   @UseGuards(UserAuthGuard) 
-  async updateUser(@Args('updateUserData') updateUserData: UpdateUserInput, @Context() context): Promise<User> {
+  async updateUser(@Args('updateUserData') updateUserData: UpdateUserInput, @Context() context) {
     const requestTokenId = context.req.user.id;
     return this.userService.update(updateUserData.id, updateUserData, requestTokenId);
   }
   
-  @Mutation(returns => Boolean)
+  @Mutation(() => Boolean)
   @UseGuards(UserAuthGuard) 
-  async removeUser(@Args('id', { type: () => Int }) id: number, @Context() context): Promise<boolean> {
+  async removeUser(@Args('id', { type: () => Int }) id: number, @Context() context) {
     const requestTokenId = context.req.user.id;
     await this.userService.remove(id, requestTokenId);
     return true;

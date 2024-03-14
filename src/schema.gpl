@@ -72,7 +72,17 @@ type UserAuthResponse {
   user: User!
 }
 
+type TripCountResponse {
+  count: Int!
+  trips: [Trip!]!
+}
+
 type UserResponse {
+  user: User!
+  trips: TripCountResponse!
+}
+
+type UsersResponse {
   users: [User!]!
   count: Float!
 }
@@ -82,9 +92,14 @@ type DriverAuthResponse {
   driver: Driver!
 }
 
-type DriverResponse {
+type DriversResponse {
   drivers: [Driver!]!
   count: Float!
+}
+
+type DriverResponse {
+  driver: Driver!
+  trips: TripCountResponse!
 }
 
 type TripResponse {
@@ -93,10 +108,10 @@ type TripResponse {
 }
 
 type Query {
-  users: UserResponse!
-  user(id: Int!): User
-  drivers: DriverResponse!
-  driver(id: Int!): Driver
+  users: UsersResponse!
+  user(id: Int!): UserResponse
+  drivers: DriversResponse!
+  driver(id: Int!): DriverResponse
   trips: TripResponse!
   trip(id: Int!): Trip
 }

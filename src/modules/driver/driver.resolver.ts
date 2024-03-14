@@ -7,6 +7,7 @@ import { DriverAuthGuard } from '../auth/auth-driver/driver-auth.guard';
 import { DriverAuthResponse } from '../auth/auth-driver/driver-auth-response';
 import { CreateDriverInput } from './dto/create-driver.input';
 import { UpdateDriverInput } from './dto/update-driver.input';
+import { DriversResponse } from './dto/drivers.response';
 import { DriverResponse } from './dto/driver.response';
 
 
@@ -17,13 +18,13 @@ export class DriverResolver {
     private tokenService: TokenService 
   ) {}
 
-  @Query(() => DriverResponse)
+  @Query(() => DriversResponse)
   @UseGuards(DriverAuthGuard) 
   async drivers() {
     return this.driverService.findAll();
   }
 
-  @Query(() => Driver, { nullable: true })
+  @Query(() => DriverResponse, { nullable: true })
   @UseGuards(DriverAuthGuard) 
   async driver(@Args('id', { type: () => Int }) id: number) {
     return this.driverService.findOne(id);

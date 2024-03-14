@@ -1,11 +1,12 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { User } from '../user.entity';
+import { TripCountResponse } from 'src/modules/trip/dto/count-trip.response';
 
 @ObjectType()
 export class UserResponse {
-  @Field(type => [User])
-  users: User[];
+  @Field(type => User)
+  user: User;
 
-  @Field()
-  count: number;
+  @Field(type => TripCountResponse)
+  trips: TripCountResponse;
 }

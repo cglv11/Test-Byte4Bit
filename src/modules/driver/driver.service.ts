@@ -1,8 +1,9 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Driver } from './driver.entity';
+import { TripCountResponse } from '../trip/dto/count-trip.response';
 
 @Injectable()
 export class DriverService {
@@ -17,13 +18,24 @@ export class DriverService {
   }  
 
 
-  async findOne(id: number): Promise<Driver | undefined> {
-    return this.driverRepository.findOne({
+  async findOne(id: number): Promise<{ driver: Driver, trips: TripCountResponse }> {
+    const driver = await this.driverRepository.findOne({
       where: { id, state: true },
       relations: ['trips'],
     });
+  
+    if (!driver) {
+      throw new NotFoundException(`Driver with ID ${id} not found`);
+    }
+  
+    const trips = {
+      count: driver.trips.length,
+      trips: driver.trips
+    };
+  
+    return { driver, trips };
   }
-
+  
 
   async create(driverData: Partial<Driver>): Promise<Driver> {
     const existingDriver = await this.driverRepository.findOne({ 
