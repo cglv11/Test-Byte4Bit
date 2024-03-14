@@ -73,4 +73,7 @@ export class Trip {
   @Field(type => String)
   updatedAt: Date;
 
+  @Column({ default: true })
+  @Field()
+  state: boolean; 
 }

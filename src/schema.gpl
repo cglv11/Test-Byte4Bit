@@ -31,6 +31,7 @@ type Trip {
   status: TripStatus!
   createdAt: String!
   updatedAt: String!
+  state: Boolean!
 }
 
 """
@@ -71,17 +72,32 @@ type UserAuthResponse {
   user: User!
 }
 
+type UserResponse {
+  users: [User!]!
+  count: Float!
+}
+
 type DriverAuthResponse {
   token: String!
   driver: Driver!
 }
 
-type Query {
-  users: [User!]!
-  user(id: Int!): User
+type DriverResponse {
   drivers: [Driver!]!
-  driver(id: Int!): Driver
+  count: Float!
+}
+
+type TripResponse {
   trips: [Trip!]!
+  count: Float!
+}
+
+type Query {
+  users: UserResponse!
+  user(id: Int!): User
+  drivers: DriverResponse!
+  driver(id: Int!): Driver
+  trips: TripResponse!
   trip(id: Int!): Trip
 }
 
@@ -96,7 +112,7 @@ type Mutation {
   removeDriver(id: Int!): Boolean!
   createTrip(createTripData: CreateTripInput!): Trip!
   updateTrip(updateTripData: UpdateTripInput!): Trip!
-  deleteTrip(id: Int!): Boolean!
+  removeTrip(id: Int!): Boolean!
   finalizeTrip(id: Int!, endDateTime: String!): Trip!
 }
 

@@ -15,21 +15,32 @@ export class TripService {
     private readonly driverService: DriverService 
   ) {}
     
-  async findAll(): Promise<Trip[]> {
-    return this.tripRepository.find();
-  }
+  async findAll(): Promise<{ trips: Trip[], count: number }> {
+    const [trips, count] = await this.tripRepository.findAndCount({ where: { state: true }, relations: ['driver', 'user'] });
+    return { trips, count };
+  }  
 
   async findOne(id: number): Promise<Trip> {
-    return this.tripRepository.findOne({ where: { id } });
+    const trip = await this.tripRepository.findOneBy({ id, state: true });
+    if (!trip) {
+      throw new NotFoundException(`Trip with ID ${id} not found`);
+    }
+    return this.tripRepository.findOne({ where: { id, state: true }, relations: ['driver', 'user'] });
   }
 
   async create(createTripData: CreateTripInput): Promise<Trip>  {
-    const userExists = await this.userService.findOne(createTripData.userId);
+    const userExists = await this.userService.findOneBy({
+      id: createTripData.userId,
+      state: true
+    });
     if (!userExists) {
       throw new NotFoundException(`User with ID ${createTripData.userId} not found`);
     }
 
-    const driverExists = await this.driverService.findOne(createTripData.driverId);
+    const driverExists = await this.driverService.findOneBy({
+      id: createTripData.driverId,
+      state: true
+    });
     if (!driverExists) {
       throw new NotFoundException(`Driver with ID ${createTripData.driverId} not found`);
     }
@@ -45,18 +56,23 @@ export class TripService {
   }
 
   async update(id: number, updateTripData: UpdateTripInput): Promise<Trip> {
-    const trip = await this.tripRepository.findOne({ where: { id } });
+    const trip = await this.tripRepository.findOneBy({ id, state: true });
     if (!trip) {
       throw new NotFoundException(`Trip with ID ${id} not found`);
     }
   
-    const userExists = await this.userService.findOne(updateTripData.userId);
+    const userExists = await this.userService.findOneBy({
+      id: updateTripData.userId,
+      state: true
+    });
     if (!userExists) {
       throw new NotFoundException(`User with ID ${updateTripData.userId} not found`);
     }
 
-    const driverExists = await this.driverService.findOne(updateTripData.driverId);
-    if (!driverExists) {
+    const driverExists = await this.driverService.findOneBy({
+      id: updateTripData.driverId,
+      state: true
+    });    if (!driverExists) {
       throw new NotFoundException(`Driver with ID ${updateTripData.driverId} not found`);
     }
 
@@ -67,16 +83,19 @@ export class TripService {
       });
 
     await this.tripRepository.update(id, tripUpdated);
-
     return this.tripRepository.findOne({ where: { id }, relations: ['driver', 'user'] });
   }
 
-  async delete(id: number): Promise<void> {
-    await this.tripRepository.delete(id);
+  async remove(id: number): Promise<void> {
+    const trip = await this.tripRepository.findOneBy({ id, state: true });
+    if (!trip) {
+      throw new NotFoundException(`Trip with ID ${id} not found`);
+    }
+    await this.tripRepository.update(id, { state: false });
   }
 
   async finalizeTrip(id: number, endDateTime: Date): Promise<Trip> {
-    const trip = await this.tripRepository.findOne({ where: { id } });
+    const trip = await this.tripRepository.findOneBy({ id, state: true });
     if (!trip) {
       throw new NotFoundException(`Trip with ID ${id} not found`);
     }

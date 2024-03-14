@@ -12,12 +12,10 @@ export class UserService {
   ) {}
 
 
-  async findAll(): Promise<User[]> {
-    return this.userRepository.find({
-      where: { state: true },
-      relations: ['trips']
-    });
-  }
+  async findAll(): Promise<{ users: User[], count: number }> {
+    const [users, count] = await this.userRepository.findAndCount({ where: { state: true }, relations: ['trips'] });
+    return { users, count };
+  }  
 
 
   async findOne(id: number): Promise<User | undefined> {
@@ -86,5 +84,9 @@ export class UserService {
   
   async findByEmail(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { email, state: true  } });
+  }
+
+  async findOneBy(criteria: { id: number; state: boolean }): Promise<User | undefined> {
+    return this.userRepository.findOneBy(criteria);
   }
 }

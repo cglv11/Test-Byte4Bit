@@ -7,6 +7,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { TokenService } from '../shared/services/token.service';
 import { UserAuthResponse } from '../auth/auth-user/user-auth-response';
 import { UserAuthGuard } from '../auth/auth-user/user-auth.guard';
+import { UserResponse } from './dto/user.response';
 
 @Resolver(of => User)
 export class UserResolver {
@@ -15,9 +16,9 @@ export class UserResolver {
     private tokenService: TokenService 
     ) {}
 
-  @Query(returns => [User])
+  @Query(returns => UserResponse)
   @UseGuards(UserAuthGuard) 
-  async users(): Promise<User[]> {
+  async users() {
     return this.userService.findAll();
   }
 

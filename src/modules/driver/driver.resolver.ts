@@ -7,6 +7,7 @@ import { DriverAuthGuard } from '../auth/auth-driver/driver-auth.guard';
 import { DriverAuthResponse } from '../auth/auth-driver/driver-auth-response';
 import { CreateDriverInput } from './dto/create-driver.input';
 import { UpdateDriverInput } from './dto/update-driver.input';
+import { DriverResponse } from './dto/driver.response';
 
 
 @Resolver(of => Driver)
@@ -16,35 +17,35 @@ export class DriverResolver {
     private tokenService: TokenService 
   ) {}
 
-  @Query(returns => [Driver])
+  @Query(() => DriverResponse)
   @UseGuards(DriverAuthGuard) 
-  async drivers(): Promise<Driver[]> {
+  async drivers() {
     return this.driverService.findAll();
   }
 
-  @Query(returns => Driver, { nullable: true })
+  @Query(() => Driver, { nullable: true })
   @UseGuards(DriverAuthGuard) 
-  async driver(@Args('id', { type: () => Int }) id: number): Promise<Driver | undefined> {
+  async driver(@Args('id', { type: () => Int }) id: number) {
     return this.driverService.findOne(id);
   }
 
-  @Mutation(returns => DriverAuthResponse)
-  async createDriver(@Args('createDriverData') createDriverData: CreateDriverInput): Promise<DriverAuthResponse> {
+  @Mutation(() => DriverAuthResponse)
+  async createDriver(@Args('createDriverData') createDriverData: CreateDriverInput) {
     const driver = await this.driverService.create(createDriverData);
     const token = this.tokenService.generateTokenDriver(driver);
     return { driver, token };
   }
 
-  @Mutation(returns => Driver)
+  @Mutation(() => Driver)
   @UseGuards(DriverAuthGuard) 
-  async updateDriver(@Args('updateDriverData') updateDriverData: UpdateDriverInput, @Context() context): Promise<Driver> {
+  async updateDriver(@Args('updateDriverData') updateDriverData: UpdateDriverInput, @Context() context) {
     const requestTokenId = context.req.user.id;
     return this.driverService.update(updateDriverData.id, updateDriverData, requestTokenId);
   }
   
-  @Mutation(returns => Boolean)
+  @Mutation(() => Boolean)
   @UseGuards(DriverAuthGuard) 
-  async removeDriver(@Args('id', { type: () => Int }) id: number, @Context() context): Promise<boolean> {
+  async removeDriver(@Args('id', { type: () => Int }) id: number, @Context() context) {
     const requestTokenId = context.req.user.id;
     await this.driverService.remove(id, requestTokenId);
     return true;

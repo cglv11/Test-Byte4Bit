@@ -3,26 +3,25 @@ import { TripService } from './trip.service';
 import { Trip } from './trip.entity';
 import { CreateTripInput } from './dto/create-trip.input';
 import { UpdateTripInput } from './dto/update-trip.input';
-import { DriverAuthGuard } from '../auth/auth-driver/driver-auth.guard';
-import { UseGuards } from '@nestjs/common';
+import { TripResponse } from './dto/trip.response';
 
 @Resolver(() => Trip)
 export class TripResolver {
   constructor(private readonly tripService: TripService) {}
 
-  @Query(() => [Trip], { name: 'trips' })
-  async findAll() {
-    return this.tripService.findAll();
+  @Query(() => TripResponse, { name: 'trips' })
+  async trips() {
+    const result = await this.tripService.findAll();
+    return result;
   }
 
-  @Query(() => Trip, { name: 'trip', nullable: true })
-  async findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => Trip, { nullable: true })
+  async trip(@Args('id', { type: () => Int }) id: number) {
     return this.tripService.findOne(id);
   }
 
   @Mutation(() => Trip)
   async createTrip(@Args('createTripData') createTripData: CreateTripInput) {
-    console.log('this is create data: ',createTripData);
     return this.tripService.create(createTripData);
   }
 
@@ -34,8 +33,9 @@ export class TripResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteTrip(@Args('id', { type: () => Int }) id: number) {
-    return this.tripService.delete(id).then(() => true).catch(() => false);
+  async removeTrip(@Args('id', { type: () => Int }) id: number) {
+    await this.tripService.remove(id);
+    return true;
   }
 
   @Mutation(returns => Trip)

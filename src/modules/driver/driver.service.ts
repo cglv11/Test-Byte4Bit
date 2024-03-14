@@ -11,13 +11,10 @@ export class DriverService {
     private driverRepository: Repository<Driver>,
   ) {}
 
-
-  async findAll(): Promise<Driver[]> {
-    return this.driverRepository.find({
-      where: { state: true },
-      relations: ['trips'],
-    });
-  }
+  async findAll(): Promise<{ drivers: Driver[], count: number }> {
+    const [drivers, count] = await this.driverRepository.findAndCount({ where: { state: true }, relations: ['trips'] });
+    return { drivers, count };
+  }  
 
 
   async findOne(id: number): Promise<Driver | undefined> {
@@ -86,5 +83,10 @@ export class DriverService {
   
   async findByEmail(email: string): Promise<Driver | undefined> {
     return this.driverRepository.findOne({ where: { email, state: true  } });
+  }
+
+
+  async findOneBy(criteria: { id: number; state: boolean }): Promise<Driver | undefined> {
+    return this.driverRepository.findOneBy(criteria);
   }
 }
