@@ -70,6 +70,11 @@ type UserAuthResponse {
   user: User!
 }
 
+type DriverAuthResponse {
+  token: String!
+  driver: Driver!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User
@@ -82,6 +87,10 @@ type Mutation {
   createUser(createUserData: CreateUserInput!): UserAuthResponse!
   updateUser(updateUserData: UpdateUserInput!): User!
   removeUser(id: Int!): Boolean!
+  loginDriver(email: String!, password: String!): DriverAuthResponse!
+  createDriver(createDriverData: CreateDriverInput!): DriverAuthResponse!
+  updateDriver(updateDriverData: UpdateDriverInput!): Driver!
+  removeDriver(id: Int!): Boolean!
 }
 
 input CreateUserInput {
@@ -96,7 +105,6 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
-  id: Int!
   firstName: String
   lastName: String
   email: String
@@ -105,4 +113,28 @@ input UpdateUserInput {
   location: String
   averageRating: Float
   status: UserStatus
+  id: Int!
+}
+
+input CreateDriverInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phoneNumber: String!
+  licenseNumber: String!
+  averageRating: Float! = 0
+  availability: Boolean! = false
+}
+
+input UpdateDriverInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phoneNumber: String
+  licenseNumber: String
+  averageRating: Float
+  availability: Boolean
+  id: Int!
 }

@@ -3,8 +3,8 @@ import { PassportModule } from "@nestjs/passport";
 import { SharedModule } from "src/modules/shared/shared.module";
 import { UserModule } from "src/modules/user/user.module";
 import { UserAuthService } from "./user-auth.service";
-import { JwtStrategy } from "../jwt.strategy";
 import { UserAuthResolver } from "./user-auth.resolver";
+import { JwtUserStrategy } from "./user-jwt.strategy";
 
 
 @Module({
@@ -15,7 +15,7 @@ import { UserAuthResolver } from "./user-auth.resolver";
     ],
     providers: [
       UserAuthService, 
-      JwtStrategy,
+      JwtUserStrategy,
       UserAuthResolver 
     ],
     exports: [UserAuthService], 

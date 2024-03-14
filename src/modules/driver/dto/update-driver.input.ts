@@ -1,10 +1,9 @@
 import { InputType, Field, Float, Int, PartialType } from '@nestjs/graphql';
-import { IsEmail, MinLength, Min, Max, IsEnum } from 'class-validator';
-import { CreateUserInput } from './create-user.input';
-import { UserStatus } from '../user.entity';
+import { IsEmail, MinLength, IsNumber } from 'class-validator';
+import { CreateDriverInput } from './create-driver.input';
 
 @InputType()
-export class UpdateUserInput extends PartialType(CreateUserInput) {
+export class UpdateDriverInput extends PartialType(CreateDriverInput){
   @Field(type => Int)
   id: number;
 
@@ -26,14 +25,12 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   phoneNumber?: string;
 
   @Field({ nullable: true })
-  location?: string;
+  licenseNumber?: string;
 
-  @Min(0)
-  @Max(5)
+  @IsNumber()
   @Field(type => Float, { nullable: true })
   averageRating?: number;
 
-  @IsEnum(UserStatus)
-  @Field(type => UserStatus, { nullable: true })
-  status?: UserStatus;
+  @Field({ nullable: true })
+  availability?: boolean;
 }

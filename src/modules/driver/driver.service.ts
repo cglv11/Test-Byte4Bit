@@ -77,7 +77,7 @@ export class DriverService {
   async remove(id: number, requestTokenId: number): Promise<void> {
 
     if (id !== requestTokenId) {
-      throw new UnauthorizedException('You do not have permission to delete this user.');
+      throw new UnauthorizedException('You do not have permission to delete this driver.');
     }
     
     await this.driverRepository.update(id, { state: false });
