@@ -1,8 +1,8 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
+import { User } from './user.entity';
 import { TripCountResponse } from '../trip/dto/count-trip.response';
 
 @Injectable()

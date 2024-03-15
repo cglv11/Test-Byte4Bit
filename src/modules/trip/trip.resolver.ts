@@ -1,11 +1,11 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { TripService } from './trip.service';
 import { Trip } from './trip.entity';
+import { UseGuards } from '@nestjs/common';
 import { CreateTripInput } from './dto/create-trip.input';
 import { UpdateTripInput } from './dto/update-trip.input';
 import { TripResponse } from './dto/trip.response';
 import { TripAuthGuard } from '../auth/auth-trip/trip-auth.guard';
-import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Trip)
 export class TripResolver {

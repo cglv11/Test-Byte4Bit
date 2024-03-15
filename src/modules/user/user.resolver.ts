@@ -9,7 +9,6 @@ import { UserAuthResponse } from '../auth/auth-user/user-auth-response';
 import { UserAuthGuard } from '../auth/auth-user/user-auth.guard';
 import { UserResponse } from './dto/user.response';
 import { UsersResponse } from './dto/users.response';
-import { AdminAuthGuard } from '../auth/auth-admin/admin-auth.guard';
 
 @Resolver(of => User)
 export class UserResolver {

@@ -1,4 +1,4 @@
-import { Module, forwardRef } from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { UserResolver } from "./user.resolver";
 import { UserService } from "./user.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
