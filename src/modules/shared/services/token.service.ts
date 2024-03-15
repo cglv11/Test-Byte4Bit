@@ -9,17 +9,17 @@ export class TokenService {
   constructor(private jwtService: JwtService) {}
 
   generateToken(user: User) {
-    const payload = { email: user.email, sub: user.id };
+    const payload = { email: user.email, sub: user.id, role: 'user' };
     return this.jwtService.sign(payload);
   }
   
   generateTokenDriver(driver: Driver) {
-    const payload = { email: driver.email, sub: driver.id };
+    const payload = { email: driver.email, sub: driver.id, role: 'driver' };
     return this.jwtService.sign(payload);
   }
 
   generateTokenAdmin(admin: Admin) {
-    const payload = { email: admin.email, sub: admin.id };
+    const payload = { email: admin.email, sub: admin.id, role: 'admin' };
     return this.jwtService.sign(payload);
   }
 }

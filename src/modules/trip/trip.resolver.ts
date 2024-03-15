@@ -4,28 +4,34 @@ import { Trip } from './trip.entity';
 import { CreateTripInput } from './dto/create-trip.input';
 import { UpdateTripInput } from './dto/update-trip.input';
 import { TripResponse } from './dto/trip.response';
+import { TripAuthGuard } from '../auth/auth-trip/trip-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Trip)
 export class TripResolver {
   constructor(private readonly tripService: TripService) {}
 
   @Query(() => TripResponse, { name: 'trips' })
+  @UseGuards(TripAuthGuard) 
   async trips() {
     const result = await this.tripService.findAll();
     return result;
   }
 
   @Query(() => Trip, { nullable: true })
+  @UseGuards(TripAuthGuard) 
   async trip(@Args('id', { type: () => Int }) id: number) {
     return this.tripService.findOne(id);
   }
 
   @Mutation(() => Trip)
+  @UseGuards(TripAuthGuard) 
   async createTrip(@Args('createTripData') createTripData: CreateTripInput) {
     return this.tripService.create(createTripData);
   }
 
   @Mutation(() => Trip)
+  @UseGuards(TripAuthGuard) 
   async updateTrip(
     @Args('updateTripData') updateTripData: UpdateTripInput,
   ) {

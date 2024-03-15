@@ -87,6 +87,26 @@ type UsersResponse {
   count: Float!
 }
 
+type Admin {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type AdminsResponse {
+  admins: [Admin!]!
+  count: Float!
+}
+
+type AdminAuthResponse {
+  token: String!
+  admin: Admin!
+}
+
 type DriverAuthResponse {
   token: String!
   driver: Driver!
@@ -100,26 +120,6 @@ type DriversResponse {
 type DriverResponse {
   driver: Driver!
   trips: TripCountResponse!
-}
-
-type Admin {
-  id: Int!
-  firstName: String!
-  lastName: String!
-  email: String!
-  phoneNumber: String!
-  createdAt: String!
-  updatedAt: String!
-}
-
-type AdminAuthResponse {
-  token: String!
-  admin: Admin!
-}
-
-type AdminsResponse {
-  admins: [Admin!]!
-  count: Float!
 }
 
 type TripResponse {

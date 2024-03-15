@@ -16,7 +16,7 @@ export class JwtAdminStrategy extends PassportStrategy(Strategy, 'jwt-admin') {
   async validate(payload: any) {
     const admin = await this.adminService.findOne(payload.sub);
     if (!admin) {
-      throw new UnauthorizedException('Access denied. User not found.');
+      throw new UnauthorizedException('Access denied. Admin not found.');
     }
 
     return admin;
