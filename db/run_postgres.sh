@@ -1,0 +1,1 @@
+docker run --name db_transport_app -e POSTGRES_PASSWORD=123456 -d postgres
