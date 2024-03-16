@@ -4,7 +4,6 @@ import { User } from '../user/user.entity';
 import { Trip } from '../trip/trip.entity';
 import { Driver } from '../driver/driver.entity';
 import { Admin } from '../admin/admin.entity';
-import { DatabaseService } from './database.service';
 
 @Module({
   imports: [
@@ -16,11 +15,9 @@ import { DatabaseService } from './database.service';
       password: process.env.DATABASE_PASSWORD || '123456',
       database: process.env.DATABASE_DATABASE || 'db_transport_app',
       entities: [User, Driver, Trip, Admin],
-      synchronize: true, // Only for development
+      // synchronize: true, // Only for development
       autoLoadEntities: true,
     }),
   ],
-  providers: [DatabaseService],
-  exports: [DatabaseService],
 })
 export class DatabaseModule {}
