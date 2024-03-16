@@ -58,7 +58,6 @@ export class DriverService {
 
 
   async update(id: number, updateData: Partial<Driver>, requestTokenId: number): Promise<Driver> {
-
     if (id !== requestTokenId) {
       throw new UnauthorizedException('You do not have permission to update this driver.');
     }

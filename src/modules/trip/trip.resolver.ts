@@ -6,13 +6,14 @@ import { CreateTripInput } from './dto/create-trip.input';
 import { UpdateTripInput } from './dto/update-trip.input';
 import { TripResponse } from './dto/trip.response';
 import { TripAuthGuard } from '../auth/auth-trip/trip-auth.guard';
+import { AdminAuthGuard } from '../auth/auth-admin/admin-auth.guard';
 
 @Resolver(() => Trip)
 export class TripResolver {
   constructor(private readonly tripService: TripService) {}
 
   @Query(() => TripResponse, { name: 'trips' })
-  @UseGuards(TripAuthGuard) 
+  @UseGuards(AdminAuthGuard) 
   async trips() {
     const result = await this.tripService.findAll();
     return result;

@@ -38,14 +38,14 @@ export class AdminResolver {
   @Mutation(() => Admin)
   @UseGuards(AdminAuthGuard) 
   async updateAdmin(@Args('updateUserData') updateAdminData: UpdateAdminInput, @Context() context) {
-    const requestTokenId = context.req.user.id;
+    const requestTokenId = context.req.user.admin.id;
     return this.adminService.update(updateAdminData.id, updateAdminData, requestTokenId);
   }
   
   @Mutation(() => Boolean)
   @UseGuards(AdminAuthGuard) 
   async removeAdmin(@Args('id', { type: () => Int }) id: number, @Context() context) {
-    const requestTokenId = context.req.user.id;
+    const requestTokenId = context.req.user.admin.id;
     await this.adminService.remove(id, requestTokenId);
     return true;
   }

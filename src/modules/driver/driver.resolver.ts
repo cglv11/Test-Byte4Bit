@@ -9,6 +9,7 @@ import { CreateDriverInput } from './dto/create-driver.input';
 import { UpdateDriverInput } from './dto/update-driver.input';
 import { DriversResponse } from './dto/drivers.response';
 import { DriverResponse } from './dto/driver.response';
+import { AdminAuthGuard } from '../auth/auth-admin/admin-auth.guard';
 
 
 @Resolver(of => Driver)
@@ -19,7 +20,7 @@ export class DriverResolver {
   ) {}
 
   @Query(() => DriversResponse)
-  @UseGuards(DriverAuthGuard) 
+  @UseGuards(AdminAuthGuard) 
   async drivers() {
     return this.driverService.findAll();
   }
@@ -40,14 +41,14 @@ export class DriverResolver {
   @Mutation(() => Driver)
   @UseGuards(DriverAuthGuard) 
   async updateDriver(@Args('updateDriverData') updateDriverData: UpdateDriverInput, @Context() context) {
-    const requestTokenId = context.req.user.id;
+    const requestTokenId = context.req.user.driver.id;
     return this.driverService.update(updateDriverData.id, updateDriverData, requestTokenId);
   }
   
   @Mutation(() => Boolean)
   @UseGuards(DriverAuthGuard) 
   async removeDriver(@Args('id', { type: () => Int }) id: number, @Context() context) {
-    const requestTokenId = context.req.user.id;
+    const requestTokenId = context.req.user.driver.id;
     await this.driverService.remove(id, requestTokenId);
     return true;
   }
