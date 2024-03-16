@@ -33,24 +33,6 @@ CREATE TABLE
     state BOOLEAN DEFAULT TRUE
   );
 
--- Create the trips table
-CREATE TABLE
-  IF NOT EXISTS trips (
-    id SERIAL PRIMARY KEY,
-    "userId" INT REFERENCES users (id) ON DELETE SET NULL,
-    "driverId" INT REFERENCES drivers (id) ON DELETE SET NULL,
-    origin VARCHAR(255),
-    destination VARCHAR(255),
-    distance DECIMAL,
-    fare DECIMAL,
-    "startDateTime" TIMESTAMP,
-    "endDateTime" TIMESTAMP,
-    status VARCHAR(50) DEFAULT 'PENDING',
-    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    state BOOLEAN DEFAULT TRUE
-  );
-
 -- Create the admins table
 CREATE TABLE
   IF NOT EXISTS admins (
@@ -63,6 +45,27 @@ CREATE TABLE
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     state BOOLEAN DEFAULT TRUE
+  );
+
+-- Create the trips table
+CREATE TABLE
+  IF NOT EXISTS trips (
+    id SERIAL PRIMARY KEY,
+    "userId" INT,
+    "driverId" INT,
+    origin VARCHAR(255) NOT NULL,
+    destination VARCHAR(255) NOT NULL,
+    distance DECIMAL NOT NULL,
+    fare DECIMAL NOT NULL,
+    "startDateTime" TIMESTAMP NOT NULL,
+    "endDateTime" TIMESTAMP,
+    duration INT,
+    status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
+    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    state BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY ("userId") REFERENCES users (id) ON DELETE SET NULL,
+    FOREIGN KEY ("driverId") REFERENCES drivers (id) ON DELETE SET NULL
   );
 
 -- Insert data into admins table
@@ -165,6 +168,7 @@ INSERT INTO
     fare,
     "startDateTime",
     "endDateTime",
+    duration,
     status
   )
 VALUES
@@ -177,6 +181,7 @@ VALUES
     150,
     TIMESTAMP '2022-03-15 08:00:00',
     TIMESTAMP '2022-03-15 08:30:00',
+    30,
     'COMPLETED'
   ),
   (
@@ -188,5 +193,6 @@ VALUES
     80,
     TIMESTAMP '2022-03-16 09:00:00',
     TIMESTAMP '2022-03-16 09:20:00',
+    20,
     'COMPLETED'
   );
