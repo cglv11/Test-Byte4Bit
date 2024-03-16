@@ -13,8 +13,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { Driver } from '../driver/driver.entity'; // Asegúrate de importar el modelo correcto
-import { User } from '../user/user.entity'; // Asegúrate de importar el modelo correcto
+import { Driver } from '../driver/driver.entity';
+import { User } from '../user/user.entity';
 
 export enum TripStatus {
   PENDING = 'pending',
