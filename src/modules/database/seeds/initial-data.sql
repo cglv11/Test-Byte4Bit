@@ -2,35 +2,35 @@
 CREATE TABLE
   IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    "firstName" VARCHAR(255) NOT NULL,
-    "lastName" VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    "phoneNumber" VARCHAR(20) NOT NULL,
-    "registrationDate" TIMESTAMP NOT NULL,
+    "firstName" VARCHAR(255),
+    "lastName" VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    "phoneNumber" VARCHAR(20),
+    "registrationDate" TIMESTAMP,
     "averageRating" DECIMAL(2, 1) DEFAULT 0.0,
     location VARCHAR(255),
-    status VARCHAR(50) NOT NULL DEFAULT 'ACTIVE',
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    state BOOLEAN NOT NULL DEFAULT TRUE
+    status VARCHAR(50) DEFAULT 'ACTIVE',
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    state BOOLEAN DEFAULT TRUE
   );
 
 -- Create the drivers table
 CREATE TABLE
   IF NOT EXISTS drivers (
     id SERIAL PRIMARY KEY,
-    "firstName" VARCHAR(255) NOT NULL,
-    "lastName" VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    "phoneNumber" VARCHAR(20) NOT NULL,
-    "licenseNumber" VARCHAR(50) NOT NULL UNIQUE,
+    "firstName" VARCHAR(255),
+    "lastName" VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    "phoneNumber" VARCHAR(20),
+    "licenseNumber" VARCHAR(50) UNIQUE,
     "averageRating" DECIMAL(2, 1) DEFAULT 0.0,
-    availability BOOLEAN NOT NULL DEFAULT FALSE,
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    state BOOLEAN NOT NULL DEFAULT TRUE
+    availability BOOLEAN DEFAULT FALSE,
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    state BOOLEAN DEFAULT TRUE
   );
 
 -- Create the trips table
@@ -39,30 +39,30 @@ CREATE TABLE
     id SERIAL PRIMARY KEY,
     "userId" INT REFERENCES users (id) ON DELETE SET NULL,
     "driverId" INT REFERENCES drivers (id) ON DELETE SET NULL,
-    origin VARCHAR(255) NOT NULL,
-    destination VARCHAR(255) NOT NULL,
-    distance DECIMAL NOT NULL,
-    fare DECIMAL NOT NULL,
-    "startDateTime" TIMESTAMP NOT NULL,
+    origin VARCHAR(255),
+    destination VARCHAR(255),
+    distance DECIMAL,
+    fare DECIMAL,
+    "startDateTime" TIMESTAMP,
     "endDateTime" TIMESTAMP,
-    status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    state BOOLEAN NOT NULL DEFAULT TRUE
+    status VARCHAR(50) DEFAULT 'PENDING',
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    state BOOLEAN DEFAULT TRUE
   );
 
 -- Create the admins table
 CREATE TABLE
   IF NOT EXISTS admins (
     id SERIAL PRIMARY KEY,
-    "firstName" VARCHAR(255) NOT NULL,
-    "lastName" VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    "phoneNumber" VARCHAR(20) NOT NULL,
-    "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    state BOOLEAN NOT NULL DEFAULT TRUE
+    "firstName" VARCHAR(255),
+    "lastName" VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+    "phoneNumber" VARCHAR(20),
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    state BOOLEAN DEFAULT TRUE
   );
 
 -- Insert data into admins table
