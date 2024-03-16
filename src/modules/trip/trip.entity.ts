@@ -17,10 +17,10 @@ import { Driver } from '../driver/driver.entity';
 import { User } from '../user/user.entity';
 
 export enum TripStatus {
-  PENDING = 'pending',
-  IN_PROGRESS = 'in_progress',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled',
+  PENDING = 'PENDING',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
 }
 
 registerEnumType(TripStatus, {

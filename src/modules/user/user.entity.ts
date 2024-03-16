@@ -16,9 +16,9 @@ import {
 import { Trip } from '../trip/trip.entity';
 
 export enum UserStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-  SUSPENDED = 'suspended',
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  SUSPENDED = 'SUSPENDED',
 }
 
 registerEnumType(UserStatus, {
