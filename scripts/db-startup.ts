@@ -12,6 +12,18 @@ console.log({
   user: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
 });
+
+async function databaseExists(
+  client: Client,
+  dbName: string,
+): Promise<boolean> {
+  const result = await client.query(
+    'SELECT 1 FROM pg_database WHERE datname=$1',
+    [dbName],
+  );
+  return result.rowCount > 0;
+}
+
 async function createDatabase() {
   const client = new Client({
     host: process.env.DATABASE_HOST,
@@ -19,9 +31,17 @@ async function createDatabase() {
     user: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
   });
-  await client.connect();
 
-  await client.query(`CREATE DATABASE "${process.env.DATABASE_DATABASE}"`);
+  await client.connect();
+  const dbName = process.env.DATABASE_DATABASE;
+
+  if (!(await databaseExists(client, dbName))) {
+    await client.query(`CREATE DATABASE "${dbName}"`);
+    console.log(`Database ${dbName} created.`);
+  } else {
+    console.log(`Database ${dbName} already exists.`);
+  }
+
   await client.end();
 }
 
