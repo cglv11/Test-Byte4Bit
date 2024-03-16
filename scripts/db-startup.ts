@@ -73,7 +73,6 @@ async function seedDatabase() {
 async function main() {
   try {
     await createDatabase();
-    console.log(`Database ${process.env.DATABASE_DATABASE} created.`);
     await seedDatabase();
     console.log('Database seeded with initial data.');
   } catch (error) {

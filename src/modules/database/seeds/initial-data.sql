@@ -38,6 +38,23 @@ CREATE TABLE IF NOT EXISTS trips (
     status VARCHAR(50)
 );
 
+-- Create the admins table
+CREATE TABLE IF NOT EXISTS admins (
+    id SERIAL PRIMARY KEY,
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255),
+    phoneNumber VARCHAR(20),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    state BOOLEAN DEFAULT TRUE
+);
+
+-- Insert data into admins table
+INSERT INTO admins (firstName, lastName, email, password, phoneNumber, state) VALUES 
+('Admin', 'User', 'admin@example.com', 'admin_password', '3122320158', TRUE);
+
 -- Insert data into users table
 INSERT INTO users (firstName, lastName, email, password, phoneNumber, registrationDate, averageRating, location) VALUES 
 ('Pedro', 'Moreno', 'usuario1@example.com', 'hashed_password', '1234567890', '2022-03-15', 4.5, 'Ciudad X'),
