@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start-database": "tsc scripts/db-startup.ts --esModuleInterop && node scripts/db-startup.js"
   },
   "dependencies": {
     "@apollo/server": "^4.10.1",

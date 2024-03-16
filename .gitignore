@@ -3,6 +3,9 @@
 /node_modules
 /build
 
+# Custom compiled output
+db-startup.js
+
 # Logs
 logs
 *.log
