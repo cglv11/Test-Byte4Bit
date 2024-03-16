@@ -1,12 +1,19 @@
 import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Trip } from '../trip/trip.entity';
 
 @Entity({ name: 'drivers' })
 @ObjectType()
 export class Driver {
   @PrimaryGeneratedColumn()
-  @Field(type => Int)
+  @Field(() => Int)
   id: number;
 
   @Column()
@@ -33,7 +40,7 @@ export class Driver {
   licenseNumber: string;
 
   @Column({ type: 'decimal', precision: 2, scale: 1, default: 0 })
-  @Field(type => Float)
+  @Field(() => Float)
   averageRating: number;
 
   @Column({ default: false })
@@ -41,18 +48,18 @@ export class Driver {
   availability: boolean;
 
   @CreateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   createdAt: Date;
 
   @UpdateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   updatedAt: Date;
 
   @OneToMany(() => Trip, trip => trip.driver)
-  @Field(type => [Trip], { nullable: true })
+  @Field(() => [Trip], { nullable: true })
   trips?: Trip[];
 
   @Column({ default: true })
   @Field()
-  state: boolean; 
+  state: boolean;
 }

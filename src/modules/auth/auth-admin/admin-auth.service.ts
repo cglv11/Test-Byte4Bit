@@ -8,7 +8,7 @@ import { Admin } from '../../admin/admin.entity';
 export class AdminAuthService {
   constructor(
     private adminService: AdminService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
   ) {}
 
   async validateAdmin(email: string, password: string): Promise<any> {
@@ -23,11 +23,15 @@ export class AdminAuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: hashedPassword, state, ...result } = admin;
     return result;
   }
 
-  async login(email: string, password: string): Promise<{ token: string; admin: Admin }> {
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ token: string; admin: Admin }> {
     const admin = await this.validateAdmin(email, password);
     const token = this.tokenService.generateTokenAdmin(admin);
 
@@ -36,5 +40,4 @@ export class AdminAuthService {
       admin,
     };
   }
-  
 }

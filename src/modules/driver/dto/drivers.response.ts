@@ -3,7 +3,7 @@ import { Driver } from '../driver.entity';
 
 @ObjectType()
 export class DriversResponse {
-  @Field(type => [Driver])
+  @Field(() => [Driver])
   drivers: Driver[];
 
   @Field()

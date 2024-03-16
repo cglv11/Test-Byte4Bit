@@ -8,7 +8,7 @@ import { Driver } from '../../driver/driver.entity';
 export class DriverAuthService {
   constructor(
     private driverService: DriverService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
   ) {}
 
   async validateDriver(email: string, password: string): Promise<any> {
@@ -23,11 +23,15 @@ export class DriverAuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: hashedPassword, state, ...result } = driver;
     return result;
   }
 
-  async login(email: string, password: string): Promise<{ token: string; driver: Driver }> {
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ token: string; driver: Driver }> {
     const driver = await this.validateDriver(email, password);
     const token = this.tokenService.generateTokenDriver(driver);
 
@@ -36,5 +40,4 @@ export class DriverAuthService {
       driver,
     };
   }
-  
 }

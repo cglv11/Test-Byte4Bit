@@ -1,11 +1,17 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'admins' })
 @ObjectType()
 export class Admin {
   @PrimaryGeneratedColumn()
-  @Field(type => Int)
+  @Field(() => Int)
   id: number;
 
   @Column()
@@ -28,13 +34,13 @@ export class Admin {
   phoneNumber: string;
 
   @CreateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   createdAt: Date;
 
   @UpdateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   updatedAt: Date;
 
   @Column({ default: true })
-  state: boolean; 
+  state: boolean;
 }

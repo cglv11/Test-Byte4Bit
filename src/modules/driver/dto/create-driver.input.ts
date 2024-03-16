@@ -24,7 +24,7 @@ export class CreateDriverInput {
   @Field()
   licenseNumber: string;
 
-  @Field(type => Float, { defaultValue: 0.0 })
+  @Field(() => Float, { defaultValue: 0.0 })
   averageRating?: number;
 
   @Field({ defaultValue: false })

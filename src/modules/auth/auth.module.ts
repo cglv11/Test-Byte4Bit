@@ -13,9 +13,8 @@ import { TripAuthModule } from './auth-trip/trip-auth.module';
     DriverAuthModule,
     TripAuthModule,
     PassportModule,
-    SharedModule
+    SharedModule,
   ],
   exports: [],
 })
-
 export class AuthModule {}

@@ -1,11 +1,11 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { Trip } from "../trip.entity";
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Trip } from '../trip.entity';
 
 @ObjectType()
 export class TripCountResponse {
-  @Field(type => Int)
+  @Field(() => Int)
   count: number;
 
-  @Field(type => [Trip])
+  @Field(() => [Trip])
   trips: Trip[];
 }

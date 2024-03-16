@@ -8,7 +8,7 @@ import { UserService } from 'src/modules/user/user.service';
 export class UserAuthService {
   constructor(
     private userService: UserService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -23,11 +23,15 @@ export class UserAuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: hashedPassword, state, ...result } = user;
     return result;
   }
 
-  async login(email: string, password: string): Promise<{ token: string; user: User }> {
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ token: string; user: User }> {
     const user = await this.validateUser(email, password);
     const token = this.tokenService.generateToken(user);
 
@@ -36,5 +40,4 @@ export class UserAuthService {
       user,
     };
   }
-  
 }

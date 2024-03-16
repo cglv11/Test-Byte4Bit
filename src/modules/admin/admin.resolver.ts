@@ -9,42 +9,54 @@ import { UpdateAdminInput } from './dto/update-user.input';
 import { AdminAuthResponse } from '../auth/auth-admin/admin-auth-response';
 import { AdminAuthGuard } from '../auth/auth-admin/admin-auth.guard';
 
-@Resolver(of => Admin)
+@Resolver(() => Admin)
 export class AdminResolver {
   constructor(
     private adminService: AdminService,
-    private tokenService: TokenService 
-    ) {}
+    private tokenService: TokenService,
+  ) {}
 
   @Query(() => AdminsResponse)
-  @UseGuards(AdminAuthGuard) 
+  @UseGuards(AdminAuthGuard)
   async admins() {
     return this.adminService.findAll();
   }
 
   @Query(() => Admin, { nullable: true })
-  @UseGuards(AdminAuthGuard) 
+  @UseGuards(AdminAuthGuard)
   async admin(@Args('id', { type: () => Int }) id: number) {
     return this.adminService.findOne(id);
   }
 
   @Mutation(() => AdminAuthResponse)
-  async createAdmin(@Args('createAdminData') createAdminData: CreateAdminInput) {
+  async createAdmin(
+    @Args('createAdminData') createAdminData: CreateAdminInput,
+  ) {
     const admin = await this.adminService.create(createAdminData);
     const token = this.tokenService.generateTokenAdmin(admin);
     return { admin, token };
   }
 
   @Mutation(() => Admin)
-  @UseGuards(AdminAuthGuard) 
-  async updateAdmin(@Args('updateUserData') updateAdminData: UpdateAdminInput, @Context() context) {
+  @UseGuards(AdminAuthGuard)
+  async updateAdmin(
+    @Args('updateUserData') updateAdminData: UpdateAdminInput,
+    @Context() context,
+  ) {
     const requestTokenId = context.req.user.admin.id;
-    return this.adminService.update(updateAdminData.id, updateAdminData, requestTokenId);
+    return this.adminService.update(
+      updateAdminData.id,
+      updateAdminData,
+      requestTokenId,
+    );
   }
-  
+
   @Mutation(() => Boolean)
-  @UseGuards(AdminAuthGuard) 
-  async removeAdmin(@Args('id', { type: () => Int }) id: number, @Context() context) {
+  @UseGuards(AdminAuthGuard)
+  async removeAdmin(
+    @Args('id', { type: () => Int }) id: number,
+    @Context() context,
+  ) {
     const requestTokenId = context.req.user.admin.id;
     await this.adminService.remove(id, requestTokenId);
     return true;

@@ -13,29 +13,27 @@ export class TripResolver {
   constructor(private readonly tripService: TripService) {}
 
   @Query(() => TripResponse, { name: 'trips' })
-  @UseGuards(AdminAuthGuard) 
+  @UseGuards(AdminAuthGuard)
   async trips() {
     const result = await this.tripService.findAll();
     return result;
   }
 
   @Query(() => Trip, { nullable: true })
-  @UseGuards(TripAuthGuard) 
+  @UseGuards(TripAuthGuard)
   async trip(@Args('id', { type: () => Int }) id: number) {
     return this.tripService.findOne(id);
   }
 
   @Mutation(() => Trip)
-  @UseGuards(TripAuthGuard) 
+  @UseGuards(TripAuthGuard)
   async createTrip(@Args('createTripData') createTripData: CreateTripInput) {
     return this.tripService.create(createTripData);
   }
 
   @Mutation(() => Trip)
-  @UseGuards(TripAuthGuard) 
-  async updateTrip(
-    @Args('updateTripData') updateTripData: UpdateTripInput,
-  ) {
+  @UseGuards(TripAuthGuard)
+  async updateTrip(@Args('updateTripData') updateTripData: UpdateTripInput) {
     return this.tripService.update(updateTripData.id, updateTripData);
   }
 
@@ -45,10 +43,10 @@ export class TripResolver {
     return true;
   }
 
-  @Mutation(returns => Trip)
+  @Mutation(() => Trip)
   async finalizeTrip(
     @Args('id', { type: () => Int }) id: number,
-    @Args('endDateTime', { type: () => String }) endDateTime: Date
+    @Args('endDateTime', { type: () => String }) endDateTime: Date,
   ) {
     return this.tripService.finalizeTrip(id, endDateTime);
   }

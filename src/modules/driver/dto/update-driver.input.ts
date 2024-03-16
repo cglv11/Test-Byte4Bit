@@ -3,6 +3,6 @@ import { CreateDriverInput } from './create-driver.input';
 
 @InputType()
 export class UpdateDriverInput extends PartialType(CreateDriverInput) {
-  @Field(type => Int)
+  @Field(() => Int)
   id: number;
 }

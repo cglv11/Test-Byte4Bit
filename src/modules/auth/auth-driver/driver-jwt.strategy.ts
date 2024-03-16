@@ -5,10 +5,13 @@ import { DriverService } from '../../driver/driver.service';
 import { AdminService } from 'src/modules/admin/admin.service';
 
 @Injectable()
-export class JwtDriverStrategy extends PassportStrategy(Strategy, 'jwt-driver') {
+export class JwtDriverStrategy extends PassportStrategy(
+  Strategy,
+  'jwt-driver',
+) {
   constructor(
     private driverService: DriverService,
-    private adminService: AdminService
+    private adminService: AdminService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -18,8 +21,7 @@ export class JwtDriverStrategy extends PassportStrategy(Strategy, 'jwt-driver') 
   }
 
   async validate(payload: any) {
-
-    if(payload.role === 'admin'){
+    if (payload.role === 'admin') {
       const admin = await this.adminService.findOne(payload.sub);
       if (!admin) {
         throw new UnauthorizedException('Access denied. Admin not found.');
@@ -27,7 +29,7 @@ export class JwtDriverStrategy extends PassportStrategy(Strategy, 'jwt-driver') 
       return admin;
     }
 
-    if(payload.role === 'driver'){
+    if (payload.role === 'driver') {
       const driver = await this.driverService.findOne(payload.sub);
       if (!driver) {
         throw new UnauthorizedException('Access denied. Driver not found.');

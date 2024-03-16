@@ -3,7 +3,7 @@ import { Trip } from '../trip.entity';
 
 @ObjectType()
 export class TripResponse {
-  @Field(type => [Trip])
+  @Field(() => [Trip])
   trips: Trip[];
 
   @Field()

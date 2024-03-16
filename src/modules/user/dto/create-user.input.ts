@@ -1,5 +1,12 @@
 import { InputType, Field, Float } from '@nestjs/graphql';
-import { IsEmail, MinLength, IsNumber, Min, Max, IsEnum } from 'class-validator';
+import {
+  IsEmail,
+  MinLength,
+  IsNumber,
+  Min,
+  Max,
+  IsEnum,
+} from 'class-validator';
 import { UserStatus } from '../user.entity';
 
 @InputType()
@@ -27,10 +34,10 @@ export class CreateUserInput {
   @IsNumber()
   @Min(0)
   @Max(5)
-  @Field(type => Float, { nullable: true, defaultValue: 0 })
+  @Field(() => Float, { nullable: true, defaultValue: 0 })
   averageRating?: number;
 
   @IsEnum(UserStatus)
-  @Field(type => UserStatus, { defaultValue: UserStatus.ACTIVE })
+  @Field(() => UserStatus, { defaultValue: UserStatus.ACTIVE })
   status: UserStatus;
 }

@@ -4,9 +4,9 @@ import { TripCountResponse } from 'src/modules/trip/dto/count-trip.response';
 
 @ObjectType()
 export class UserResponse {
-  @Field(type => User)
+  @Field(() => User)
   user: User;
 
-  @Field(type => TripCountResponse)
+  @Field(() => TripCountResponse)
   trips: TripCountResponse;
 }

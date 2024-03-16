@@ -3,6 +3,6 @@ import { CreateAdminInput } from './create-admin.input';
 
 @InputType()
 export class UpdateAdminInput extends PartialType(CreateAdminInput) {
-  @Field(type => Int)
+  @Field(() => Int)
   id: number;
 }

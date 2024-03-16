@@ -1,5 +1,5 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-import { Driver } from "src/modules/driver/driver.entity";
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Driver } from 'src/modules/driver/driver.entity';
 
 @ObjectType()
 export class DriverAuthResponse {

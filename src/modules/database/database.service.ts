@@ -12,7 +12,7 @@ export class DatabaseService implements OnModuleInit {
       await this.seedDatabase();
     } catch (error) {
       console.error('Error during database seeding', error);
-      throw error; 
+      throw error;
     }
   }
 

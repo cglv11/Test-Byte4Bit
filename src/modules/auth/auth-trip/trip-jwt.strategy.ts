@@ -10,8 +10,8 @@ export class JwtTripStrategy extends PassportStrategy(Strategy, 'jwt-trip') {
   constructor(
     private adminService: AdminService,
     private userService: UserService,
-    private driverService: DriverService
-) {
+    private driverService: DriverService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -20,16 +20,15 @@ export class JwtTripStrategy extends PassportStrategy(Strategy, 'jwt-trip') {
   }
 
   async validate(payload: any) {
-    
-    if(payload.role === 'admin'){
-       const admin = await this.adminService.findOne(payload.sub);
-       if (!admin) {
-         throw new UnauthorizedException('Access denied. Admin not found.');
-       }
-       return admin;
+    if (payload.role === 'admin') {
+      const admin = await this.adminService.findOne(payload.sub);
+      if (!admin) {
+        throw new UnauthorizedException('Access denied. Admin not found.');
+      }
+      return admin;
     }
-  
-    if(payload.role === 'driver'){
+
+    if (payload.role === 'driver') {
       const driver = await this.driverService.findOne(payload.sub);
       if (!driver) {
         throw new UnauthorizedException('Access denied. Driver not found.');
@@ -37,7 +36,7 @@ export class JwtTripStrategy extends PassportStrategy(Strategy, 'jwt-trip') {
       return driver;
     }
 
-    if(payload.role === 'user'){
+    if (payload.role === 'user') {
       const user = await this.userService.findOne(payload.sub);
       if (!user) {
         throw new UnauthorizedException('Access denied. User not found.');

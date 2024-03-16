@@ -14,7 +14,7 @@ import { DatabaseModule } from './modules/database/database.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gpl',
-      path: 'transport-app'
+      path: 'transport-app',
     }),
     DatabaseModule,
     AdminModule,
@@ -22,7 +22,7 @@ import { DatabaseModule } from './modules/database/database.module';
     UserModule,
     DriverModule,
     TripModule,
-    SharedModule
+    SharedModule,
   ],
   controllers: [],
   providers: [],

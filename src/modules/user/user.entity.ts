@@ -1,5 +1,18 @@
-import { ObjectType, Field, Int, Float, registerEnumType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  ObjectType,
+  Field,
+  Int,
+  Float,
+  registerEnumType,
+} from '@nestjs/graphql';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Trip } from '../trip/trip.entity';
 
 export enum UserStatus {
@@ -16,7 +29,7 @@ registerEnumType(UserStatus, {
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn()
-  @Field(type => Int)
+  @Field(() => Int)
   id: number;
 
   @Column()
@@ -39,7 +52,7 @@ export class User {
   phoneNumber: string;
 
   @CreateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   registrationDate: Date;
 
   @Column({ nullable: true })
@@ -47,29 +60,29 @@ export class User {
   location?: string;
 
   @Column({ type: 'decimal', precision: 2, scale: 1, default: 0 })
-  @Field(type => Float, { nullable: true })
+  @Field(() => Float, { nullable: true })
   averageRating?: number;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: UserStatus,
-    default: UserStatus.ACTIVE
+    default: UserStatus.ACTIVE,
   })
-  @Field(type => UserStatus)
+  @Field(() => UserStatus)
   status: UserStatus;
 
   @CreateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   createdAt: Date;
 
   @UpdateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   updatedAt: Date;
 
   @OneToMany(() => Trip, trip => trip.user)
-  @Field(type => [Trip], { nullable: true })
+  @Field(() => [Trip], { nullable: true })
   trips?: Trip[];
 
   @Column({ default: true })
-  state: boolean; 
+  state: boolean;
 }

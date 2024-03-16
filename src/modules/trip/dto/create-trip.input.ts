@@ -1,13 +1,13 @@
 import { InputType, Field, Float, Int } from '@nestjs/graphql';
-import { IsNotEmpty, IsDecimal, IsEnum, IsInt, Min, IsNumber } from 'class-validator';
+import { IsEnum, IsInt, Min, IsNumber } from 'class-validator';
 import { TripStatus } from '../trip.entity';
 
 @InputType()
 export class CreateTripInput {
-  @Field(type => Int)
+  @Field(() => Int)
   driverId: number;
 
-  @Field(type => Int)
+  @Field(() => Int)
   userId: number;
 
   @Field()
@@ -17,19 +17,19 @@ export class CreateTripInput {
   destination: string;
 
   @IsNumber()
-  @Field(type => Float)
+  @Field(() => Float)
   distance: number;
 
   @IsNumber()
-  @Field(type => Float)
+  @Field(() => Float)
   fare: number;
 
   @IsInt()
   @Min(0)
-  @Field(type => Int, { description: "Duration of the trip in minutes." })
+  @Field(() => Int, { description: 'Duration of the trip in minutes.' })
   duration: number;
 
   @IsEnum(TripStatus)
-  @Field(type => TripStatus, { defaultValue: TripStatus.PENDING })
+  @Field(() => TripStatus, { defaultValue: TripStatus.PENDING })
   status: TripStatus;
 }

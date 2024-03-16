@@ -1,5 +1,18 @@
-import { ObjectType, Field, Int, Float, registerEnumType } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import {
+  ObjectType,
+  Field,
+  Int,
+  Float,
+  registerEnumType,
+} from '@nestjs/graphql';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+} from 'typeorm';
 import { Driver } from '../driver/driver.entity'; // Asegúrate de importar el modelo correcto
 import { User } from '../user/user.entity'; // Asegúrate de importar el modelo correcto
 
@@ -18,15 +31,15 @@ registerEnumType(TripStatus, {
 @ObjectType()
 export class Trip {
   @PrimaryGeneratedColumn()
-  @Field(type => Int)
+  @Field(() => Int)
   id: number;
 
   @ManyToOne(() => Driver)
-  @Field(type => Driver)
+  @Field(() => Driver)
   driver: Driver;
 
   @ManyToOne(() => User)
-  @Field(type => User)
+  @Field(() => User)
   user: User;
 
   @Column()
@@ -46,34 +59,34 @@ export class Trip {
   endDateTime?: Date;
 
   @Column({ type: 'decimal' })
-  @Field(type => Float)
+  @Field(() => Float)
   distance: number;
 
   @Column({ type: 'decimal' })
-  @Field(type => Float)
+  @Field(() => Float)
   fare: number;
 
-  @Column({ nullable: true, type: 'bigint' }) 
-  @Field(type => Int, { nullable: true })
+  @Column({ nullable: true, type: 'bigint' })
+  @Field(() => Int, { nullable: true })
   duration?: number;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: TripStatus,
-    default: TripStatus.PENDING
+    default: TripStatus.PENDING,
   })
-  @Field(type => TripStatus)
+  @Field(() => TripStatus)
   status: TripStatus;
 
   @CreateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   createdAt: Date;
 
   @UpdateDateColumn()
-  @Field(type => String)
+  @Field(() => String)
   updatedAt: Date;
 
   @Column({ default: true })
   @Field()
-  state: boolean; 
+  state: boolean;
 }

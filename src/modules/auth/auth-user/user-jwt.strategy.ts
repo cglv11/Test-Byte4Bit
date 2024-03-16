@@ -8,7 +8,7 @@ import { UserService } from 'src/modules/user/user.service';
 export class JwtUserStrategy extends PassportStrategy(Strategy, 'jwt-user') {
   constructor(
     private userService: UserService,
-    private adminService: AdminService
+    private adminService: AdminService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -18,8 +18,7 @@ export class JwtUserStrategy extends PassportStrategy(Strategy, 'jwt-user') {
   }
 
   async validate(payload: any) {
-
-    if(payload.role === 'admin'){
+    if (payload.role === 'admin') {
       const admin = await this.adminService.findOne(payload.sub);
       if (!admin) {
         throw new UnauthorizedException('Access denied. Admin not found.');
@@ -27,8 +26,7 @@ export class JwtUserStrategy extends PassportStrategy(Strategy, 'jwt-user') {
       return admin;
     }
 
-    if(payload.role === 'user'){
-
+    if (payload.role === 'user') {
       const user = await this.userService.findOne(payload.sub);
       if (!user) {
         throw new UnauthorizedException('Access denied. User not found.');

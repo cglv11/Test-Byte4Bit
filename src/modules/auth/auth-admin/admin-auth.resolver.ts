@@ -8,9 +8,10 @@ export class AdminAuthResolver {
   constructor(private adminAuthService: AdminAuthService) {}
 
   @Mutation(() => AdminAuthResponse)
-    async loginAdmin(@Args('email') email: string, @Args('password') password: string,
+  async loginAdmin(
+    @Args('email') email: string,
+    @Args('password') password: string,
   ) {
-
     const { token, admin } = await this.adminAuthService.login(email, password);
     return {
       token,

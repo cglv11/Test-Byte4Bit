@@ -3,7 +3,7 @@ import { Admin } from '../admin.entity';
 
 @ObjectType()
 export class AdminsResponse {
-  @Field(type => [Admin])
+  @Field(() => [Admin])
   admins: Admin[];
 
   @Field()
