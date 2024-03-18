@@ -3,7 +3,7 @@ config();
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as passport from 'passport';
+import passport from 'passport';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
