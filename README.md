@@ -84,3 +84,9 @@ cd ..
 ```bash
 npm run build
 ```
+
+# View
+
+After running you will have to enter to http://localhost:3000/transport-app and you will see the queries and mutations as shows below
+
+![image](https://github.com/cglv11/Python-Byte4Bit/assets/20548770/bedbd9b3-4e8e-443d-9bc8-7f4820432bd9)
