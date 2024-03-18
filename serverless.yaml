@@ -1,0 +1,41 @@
+service: nestjs-grapgh-lambda
+
+useDotenv: true
+
+plugins:
+  - serverless-offline
+  - serverless-jetpack
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  architecture: arm64
+  region: us-west-2
+  memorySize: 2048
+  timeout: 15
+  environment:
+    SECRETORPRIVATEKEY: ${env:SECRETORPRIVATEKEY}
+    DATABASE_HOST: ${env:DATABASE_HOST}
+    DATABASE_USERNAME: ${env:DATABASE_USERNAME}
+    DATABASE_PASSWORD: ${env:DATABASE_PASSWORD}
+    DATABASE_DATABASE: ${env:DATABASE_DATABASE}
+    PROJECT_ENVIRONMENT: ${env:PROJECT_ENVIRONMENT}
+    NODE_ENV: production
+
+functions:
+  main:
+    handler: dist/src/serverless.handler
+    events:
+      - http:
+          method: ANY
+          path: /
+      - http:
+          method: ANY
+          path: '{proxy+}'
+    package:
+      individually: true
+      include:
+        - src/schema.gpl
+      patterns:
+        - 'dist/**'
+        - 'src/schema.gpl'
