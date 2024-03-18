@@ -1,5 +1,5 @@
 
-# NestJS and GraphQL Example
+# NestJS and GraphQL Test
 
 This is a NestJS application configured with GitHub Actions for CI/CD, GraphQL for querying, Husky for pre-commit hooks, and set up for deployment on AWS Lambda.
 
