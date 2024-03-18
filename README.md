@@ -48,7 +48,7 @@ docker-compose up -d
 ### Populate database
 
 ```bash
-yarn start-database
+npm start-database
 ```
 
 ### NestJS App
