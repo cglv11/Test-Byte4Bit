@@ -8,8 +8,6 @@ This is a NestJS application configured with GitHub Actions for CI/CD, GraphQL f
 - **GraphQL**: Implementing GraphQL for efficient and flexible querying.
 - **Husky**: Using Husky for managing Git hooks.
 - **Docker**: Containerization of NestJS app and PostgreSQL database.
-- **GitHub Actions**: Automated CI/CD pipeline.
-- **AWS Lambda**: Ready for deployment on AWS Lambda.
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
