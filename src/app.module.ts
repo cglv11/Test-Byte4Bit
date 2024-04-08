@@ -13,8 +13,8 @@ import { DatabaseModule } from './modules/database/database.module';
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: 'src/schema.gpl',
-      playground: true,
+      autoSchemaFile: '/tmp/schema.gpl',
+      playground: process.env.NODE_ENV !== 'production',
       path: 'transport-app',
     }),
     DatabaseModule,

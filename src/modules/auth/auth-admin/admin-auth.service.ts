@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { AdminService } from 'src/modules/admin/admin.service';
 import { TokenService } from 'src/modules/shared/services/token.service';
 import { Admin } from '../../admin/admin.entity';

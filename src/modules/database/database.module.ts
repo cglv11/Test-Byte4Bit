@@ -17,6 +17,9 @@ import { Admin } from '../admin/admin.entity';
       entities: [User, Driver, Trip, Admin],
       // synchronize: true, // Only for development
       autoLoadEntities: true,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
   ],
 })

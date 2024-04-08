@@ -162,9 +162,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/nestjs-grapgh-lambda/dev/1710791336040-2024-03-18T19:48:56.040Z/main.zip"
+          "S3Key": "serverless/nestjs-grapgh-lambda/dev/1712557545294-2024-04-08T06:25:45.294Z/main.zip"
         },
-        "Handler": "dist/src/serverless.handler",
+        "Handler": "dist/src/lamda.handler",
         "Runtime": "nodejs20.x",
         "FunctionName": "nestjs-grapgh-lambda-dev-main",
         "MemorySize": 2048,
@@ -175,12 +175,12 @@
         "Environment": {
           "Variables": {
             "SECRETORPRIVATEKEY": "mysecretkey",
-            "DATABASE_HOST": "database-1.c36446oys62m.us-east-1.rds.amazonaws.com",
+            "DATABASE_HOST": "postgres-rds.c36446oys62m.us-east-1.rds.amazonaws.com",
             "DATABASE_USERNAME": "postgres",
-            "DATABASE_PASSWORD": "postgres-password",
+            "DATABASE_PASSWORD": "postgres123456",
             "DATABASE_DATABASE": "db_transport_app",
             "PROJECT_ENVIRONMENT": "DEVELOPMENT",
-            "NODE_ENV": "production"
+            "NODE_ENV": "protempFilePathduction"
           }
         },
         "Role": {
@@ -194,14 +194,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersionpeoDdKYRgYSBo2fADkHW966fs9S9mss3kbzKFIpA": {
+    "MainLambdaVersion0argBsG1O2HTtP8iib7eZPIIZAEb7wNCiiq7y22vwn0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "5ZyC+9qID4FyIlbbUDDrkV3FOloplEnf1EwOLJHfvnQ="
+        "CodeSha256": "3rvyOXqFHfiCzbYkKgZlr/81vr1TbJBEqWJfd71HZGc="
       }
     },
     "ApiGatewayRestApi": {
@@ -226,6 +226,99 @@
           ]
         },
         "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodProxyVarOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceProxyVar"
+        },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -326,7 +419,7 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1710791265482": {
+    "ApiGatewayDeployment1712557488801": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -335,6 +428,8 @@
         "StageName": "dev"
       },
       "DependsOn": [
+        "ApiGatewayMethodOptions",
+        "ApiGatewayMethodProxyVarOptions",
         "ApiGatewayMethodAny",
         "ApiGatewayMethodProxyVarAny"
       ]
@@ -389,7 +484,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersionpeoDdKYRgYSBo2fADkHW966fs9S9mss3kbzKFIpA"
+        "Ref": "MainLambdaVersion0argBsG1O2HTtP8iib7eZPIIZAEb7wNCiiq7y22vwn0"
       },
       "Export": {
         "Name": "sls-nestjs-grapgh-lambda-dev-MainLambdaFunctionQualifiedArn"
