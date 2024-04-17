@@ -52,4 +52,4 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DATABASE_DATABASE: ${{ secrets.DATABASE_DATABASE }}
           PROJECT_ENVIRONMENT: ${{ secrets.PROJECT_ENVIRONMENT }}
-        run: sls deploy --stage prod --region us-west-2
+        run: sls deploy --stage prod --region us-west-2 --verbose

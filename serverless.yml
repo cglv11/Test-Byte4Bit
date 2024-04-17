@@ -1,4 +1,4 @@
-service: nestjs-grapgh-lambda
+service: nestjs-grapgh-lambda-cicd
 
 useDotenv: true
 
