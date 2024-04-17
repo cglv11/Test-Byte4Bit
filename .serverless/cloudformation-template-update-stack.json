@@ -162,7 +162,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/nestjs-grapgh-lambda/dev/1712557545294-2024-04-08T06:25:45.294Z/main.zip"
+          "S3Key": "serverless/nestjs-grapgh-lambda/dev/1713311083732-2024-04-16T23:44:43.732Z/main.zip"
         },
         "Handler": "dist/src/lamda.handler",
         "Runtime": "nodejs20.x",
@@ -175,9 +175,9 @@
         "Environment": {
           "Variables": {
             "SECRETORPRIVATEKEY": "mysecretkey",
-            "DATABASE_HOST": "postgres-rds.c36446oys62m.us-east-1.rds.amazonaws.com",
+            "DATABASE_HOST": "postgres-rds-1.cvk860q80sw1.us-west-2.rds.amazonaws.com",
             "DATABASE_USERNAME": "postgres",
-            "DATABASE_PASSWORD": "postgres123456",
+            "DATABASE_PASSWORD": "postgresrds",
             "DATABASE_DATABASE": "db_transport_app",
             "PROJECT_ENVIRONMENT": "DEVELOPMENT",
             "NODE_ENV": "protempFilePathduction"
@@ -194,14 +194,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersion0argBsG1O2HTtP8iib7eZPIIZAEb7wNCiiq7y22vwn0": {
+    "MainLambdaVersionwH8Cm4V5sBsuUT31vpSmoHSoPFh1dT9R1lUsTWCsiE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "3rvyOXqFHfiCzbYkKgZlr/81vr1TbJBEqWJfd71HZGc="
+        "CodeSha256": "ebQIdN1mh909L+sP9fEtbaOVW2oXxF+TY/8dosMh1q8="
       }
     },
     "ApiGatewayRestApi": {
@@ -419,7 +419,7 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1712557488801": {
+    "ApiGatewayDeployment1713311018627": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -484,7 +484,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersion0argBsG1O2HTtP8iib7eZPIIZAEb7wNCiiq7y22vwn0"
+        "Ref": "MainLambdaVersionwH8Cm4V5sBsuUT31vpSmoHSoPFh1dT9R1lUsTWCsiE"
       },
       "Export": {
         "Name": "sls-nestjs-grapgh-lambda-dev-MainLambdaFunctionQualifiedArn"
